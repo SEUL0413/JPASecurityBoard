@@ -3,7 +3,7 @@
 
 
 ### 프레임워크
-JAPA 11  
+JAVA 11  
 SpringBoot  
 JPA(Spring Data JPA)  
 Spring Security    
