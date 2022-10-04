@@ -16,7 +16,7 @@ Oracle
 ### 프론트엔드
 Html/CSS  
 BootStrap  
-Thymeleff    
+Thymeleaf    
 
 
 ### 프로젝트 기능
@@ -70,7 +70,7 @@ Thymeleff
 - 게시판 Create 첨부파일 등록 기능 추가 필요
 - js inline코드에서 파일로 빼내어 작성 필요
 
-이번엔 Thymeleff를 사용해 간단히 서버 사이드 렌더링으로 만들어봤지만
+이번엔 Thymeleaf를 사용해 간단히 서버 사이드 렌더링으로 만들어봤지만
 다음엔 API는 그대로 사용하고 vue.js로 바꾸어 클라이언트 사이드 렌더링으로 만들어 볼 예정이다.
 
 
