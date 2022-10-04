@@ -1,0 +1,78 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header" />
+<body>
+
+    <div class="container">
+        <div th:replace="fragments/bodyHeader :: bodyHeader" />
+        <div class="d-grid gap-2 d-md-block">
+            <a href="#" th:href="@{/posts/write}" class="btn btn-outline-primary" role="button">글쓰기</a>
+            <a href="#" th:href="@{/}" class="btn btn-outline-primary" role="button">HOME</a>
+            <input type="hidden" th:value="${writer.id}"/>
+        </div>
+        <br/>
+        <div class="">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>제목</th>
+                    <th>작성자</th>
+                    <th>조회수</th>
+                    <th>작성일</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="posts : ${lists}">
+                    <td><a href="#" th:href="@{/posts/read/{id} (id=${posts.id})}"><p th:text="${posts.title}"></p></a> </td>
+                    <td><a href="#" th:href="@{/posts/read/{id} (id=${posts.id})}"><p th:text="${posts.writer}"></p></a> </td>
+                    <td><a href="#" th:href="@{/posts/read/{id} (id=${posts.id})}"><p th:text="${posts.count}"></p></a> </td>
+                    <td><a href="#" th:href="@{/posts/read/{id} (id=${posts.id})}">
+                        <p th:text="${posts.createdDate}"></p></a>
+                    </td>
+                    <td>
+                        <th:block th:if="${writer.id == posts.member.id}">
+
+                            <a href="#" th:href="@{/posts/update/{id} (id=${posts.id})}" class="btn btn-primary" role="button">수정</a>
+                            <button type="button" th:postId="${posts.id}" th:onclick="btnDelete(this.getAttribute('postId'))"
+                                    id="btn-delete" class="btn btn-danger bi bi-trash">삭제</button>
+
+                        </th:block>
+                    </td>
+
+                </tr>
+                </tbody>
+            </table>
+            <div th:replace="posts/postsPage :: page" />
+        </div>
+        <br/>
+        <div th:replace="fragments/footer :: footer" />
+    </div> <!-- /container -->
+</body>
+
+<script th:inline="javascript">
+    function btnDelete(id) {
+        const con_check = confirm("정말 삭제하시겠습니까?");
+
+        if(con_check == true) {
+            $.ajax({
+                type: 'DELETE',
+                url: '/posts/postDelete/'+id,
+                async : true,
+                data : JSON.stringify(id),
+                dataType : "json",
+                contentType : "application/json;charset=UTF-8",
+                success: function (data){
+                    alert("success")
+                    window.location.href = '/posts';
+                },
+            });
+        } else {
+            return false;
+        }
+    }
+</script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+</html>

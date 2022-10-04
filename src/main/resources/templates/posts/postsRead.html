@@ -1,0 +1,64 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header" />
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</head>
+<body>
+    <div class="container">
+        <div th:replace="fragments/bodyHeader :: bodyHeader" />
+
+        <form th:object="${posts}" method="post">
+            <div>
+                <input type="hidden" th:field="*{id}" id="id" name="id" class="form-control">
+            </div>
+            <div>
+                <label>제목</label>
+                <input type="text" th:field="*{title}" id="title" name="title" class="form-control" readonly>
+
+            </div>
+            <div>
+                <label>내용</label>
+                <textarea th:field="*{content}" cols="150" rows="10" id="content" class="form-control" readonly></textarea>
+            </div>
+            <br/>
+            <div class="row">
+                <div class="col d-grid gap-2 d-md-flex justify-content-md-end">
+                    <button class="btn btn-secondary" th:onclick="|location.href='@{/posts}'|" type="button">목록</button>
+                </div>
+            </div>
+            <br/>
+
+        </form>
+        <br/>
+        <div th:replace="fragments/footer :: footer" />
+    </div> <!-- /container -->
+</body>
+
+<script th:inline="javascript">
+    function btnCall() {
+        const posts = {
+            id : $("#id").val(),
+            title : $("#title").val(),
+            content : $("#content").val(),
+        };
+
+        $.ajax({
+            type : "PUT",
+            url : "/posts/postUpdate/"+posts.id,
+            async : true,
+            data : JSON.stringify(posts),
+            dataType : "json",
+            contentType : "application/json;charset=UTF-8",
+            success: function (data){
+                alert("success")
+                window.location.href = '/posts';
+            },
+        });
+    }
+</script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+</html>
+
